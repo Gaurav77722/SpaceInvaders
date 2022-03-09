@@ -34,6 +34,10 @@ public class EnemyManager : MonoBehaviour
     private float percentAlive;
     private int totalEnemies;
 
+    private ScoreManager sm;
+    private int highScore;
+    private string highScoreKey = "key";
+
     
     public GameObject bulletPrefab;
     public Transform shootOffsetTransform;
@@ -46,6 +50,7 @@ public class EnemyManager : MonoBehaviour
         SpawnEnemyRow(enemy2Prefab, enemyStartHeight - heightPerEnemy);
         SpawnEnemyRow(enemy3Prefab, enemyStartHeight - heightPerEnemy * 2f);
         currentShotInterval = Random.Range(minSheetInterval, maxShootInterval);
+        sm = GameObject.Find("Text (TMP)").GetComponent<ScoreManager>();
 
         foreach (Transform enemyTransform in enemyRoot)
         {
@@ -66,6 +71,12 @@ public class EnemyManager : MonoBehaviour
         {
             timeSinceLastStep -= secondsPerStep;
             enemyRoot.position += marchDirection * widthPerEnemy * 0.5f;
+
+            // Move faster if less enemies
+            if (percentAlive < 0.5)
+            {
+                enemyRoot.position += marchDirection * widthPerEnemy * 0.8f;
+            }
 
             float horizontalExtent = Camera.main.orthographicSize * Camera.main.aspect - widthPerEnemy;
             foreach (Transform enemyTransform in enemyRoot)
@@ -93,7 +104,7 @@ public class EnemyManager : MonoBehaviour
 
         percentAlive = (float) enemyAlive / totalEnemies;
 
-
+        
 
 
     }

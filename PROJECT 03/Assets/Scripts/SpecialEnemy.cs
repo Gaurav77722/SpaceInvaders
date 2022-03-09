@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class SpecialEnemy : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         body.AddForce(Vector2.left * 30f, ForceMode2D.Impulse);
+        body.gameObject.tag = "enemy4";
     }
 
     // Update is called once per frame
@@ -29,4 +31,5 @@ public class SpecialEnemy : MonoBehaviour
             body.AddForce(Vector2.right * 10f, ForceMode2D.Impulse);
         }
     }
+    
 }

@@ -28,5 +28,5 @@ public class Bullet : MonoBehaviour
         Debug.Log("Wwweeeeee");
     }
 
-   
+    
 }

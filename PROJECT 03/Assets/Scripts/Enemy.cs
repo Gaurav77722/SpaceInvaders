@@ -12,14 +12,13 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D enemy;
 
     private ScoreManager sm;
+    
 
-    private Animator enemyAnimator;
 
     private bool destroy = false;
     
     private void Start()
     {
-        enemyAnimator = GetComponent<Animator>();
         enemy = GetComponent<Rigidbody2D>(); 
         sm = GameObject.Find("Text (TMP)").GetComponent<ScoreManager>();
     }
@@ -51,15 +50,19 @@ public class Enemy : MonoBehaviour
                 {
                     sm.scoreIncEnemy3();
                 }
+                else if (enemy.gameObject.tag == "enemy4")
+                {
+                    sm.scoreIncEnemy4();
+                }
 
                 sm.setScore();
                 Destroy(enemy.gameObject);
                 destroy = true;
+                
+                
             }
 
-
-            enemyAnimator.SetBool("onDestroy", destroy);
-
+            
             Debug.Log("Ouch!");
         }
     }
