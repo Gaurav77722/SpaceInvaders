@@ -370,6 +370,8 @@
 "Assets/Scripts/Bunker.cs"
 "Assets/Scripts/Enemy.cs"
 "Assets/Scripts/EnemyManager.cs"
+"Assets/Scripts/GameManager.cs"
+"Assets/Scripts/MainMenu.cs"
 "Assets/Scripts/Player.cs"
 "Assets/Scripts/ScoreManager.cs"
 "Assets/Scripts/SpecialEnemy.cs"

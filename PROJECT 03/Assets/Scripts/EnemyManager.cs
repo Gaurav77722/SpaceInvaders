@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class EnemyManager : MonoBehaviour
@@ -41,6 +42,9 @@ public class EnemyManager : MonoBehaviour
     
     public GameObject bulletPrefab;
     public Transform shootOffsetTransform;
+    
+    public AudioSource audioSrc;
+    public AudioClip audioOnShoot;
     private void Start()
     {
         float windowHeight = Camera.main.orthographicSize * 2;
@@ -58,6 +62,8 @@ public class EnemyManager : MonoBehaviour
         }
         
         InvokeRepeating(nameof(enemyAttack), currentShotInterval, currentShotInterval);
+
+        audioSrc = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -101,6 +107,11 @@ public class EnemyManager : MonoBehaviour
         {
             enemyAlive = enemyAlive + 1;
         }
+        
+        if (enemyAlive == 0)
+        {
+            SceneManager.LoadScene("Credits");  
+        }
 
         percentAlive = (float) enemyAlive / totalEnemies;
 
@@ -133,7 +144,10 @@ public class EnemyManager : MonoBehaviour
             {
                 // Debug.Log(currentShotInterval);
                 // Debug.Log((1.0f / (float) percentAlive));
+                enemyTransform.GetComponent<Animator>().SetTrigger("onShoot");
                 GameObject shot = Instantiate(bulletPrefab, enemyTransform.position, Quaternion.identity);
+                audioSrc.clip = audioOnShoot;
+                audioSrc.Play();
                 shot.tag = "byEnemy";
                 break;
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -8,11 +9,13 @@ public class Enemy : MonoBehaviour
 
     public int pointValue = 50;
     
-    private int enemyHealth = 80;
+    private int enemyHealth = 20;
     private Rigidbody2D enemy;
 
     private ScoreManager sm;
-    
+
+    public AudioSource audioSrc;
+    public AudioClip audioOnDestroy;
 
 
     private bool destroy = false;
@@ -21,6 +24,7 @@ public class Enemy : MonoBehaviour
     {
         enemy = GetComponent<Rigidbody2D>(); 
         sm = GameObject.Find("Text (TMP)").GetComponent<ScoreManager>();
+        audioSrc = GetComponent<AudioSource>();
     }
 
     //-----------------------------------------------------------------------------
@@ -56,8 +60,7 @@ public class Enemy : MonoBehaviour
                 }
 
                 sm.setScore();
-                Destroy(enemy.gameObject);
-                destroy = true;
+                StartCoroutine(DelayForAnimation());
                 
                 
             }
@@ -65,5 +68,14 @@ public class Enemy : MonoBehaviour
             
             Debug.Log("Ouch!");
         }
+    }
+    
+    IEnumerator DelayForAnimation()
+    {
+        enemy.GetComponent<Animator>().SetTrigger("Destroy");
+        audioSrc.clip = audioOnDestroy;
+        audioSrc.Play();
+        yield return new WaitForSeconds(2);
+        Destroy(enemy.gameObject);
     }
 }

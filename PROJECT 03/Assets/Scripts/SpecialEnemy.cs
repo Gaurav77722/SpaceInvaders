@@ -18,10 +18,6 @@ public class SpecialEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontalExtent = Camera.main.orthographicSize * Camera.main.aspect;
-        
-        
-        
         if (body.position.x > 20)
         {
             body.AddForce(Vector2.left * 10f, ForceMode2D.Impulse);

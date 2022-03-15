@@ -42,19 +42,23 @@ public class ScoreManager : MonoBehaviour
     
 
     public void setScore()
-    {
-        if(points>highScore){
-            PlayerPrefs.SetInt(highScoreKey, points);
-            PlayerPrefs.Save();
-        }
-        
+    { 
         if (points < 100)
         {
             score.SetText("Score: " + "00" + points + "  HighScore: " + highScore);
         }
-        else if (points > 100)
+        else if (points >= 100)
         {
             score.SetText("Score: " + "0" + points + "  HighScore: " + highScore);
+        }
+        saveHighScore();
+    }
+
+    void saveHighScore()
+    {
+        if(points>highScore){
+            PlayerPrefs.SetInt(highScoreKey, points);
+            PlayerPrefs.Save();
         }
     }
 }
